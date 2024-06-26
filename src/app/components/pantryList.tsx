@@ -1,6 +1,7 @@
 import { GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import BaseDataGrid from "./base/baseDataGrid";
 import BaseAppBar from "./base/baseAppBar";
+import { Grid } from "@mui/material";
 
 export default function PantryList() {
 
@@ -19,9 +20,17 @@ export default function PantryList() {
       ];
 
     return (
-        <div>
-            <BaseAppBar title="Pantry Items"/>
-            <BaseDataGrid rows={rows} columns={columns}/>
-        </div>
+        <Grid 
+        container 
+        spacing={3}
+        direction="column"
+        justifyContent="center">
+            <Grid item>
+                <BaseAppBar title="Pantry Items"/>
+            </Grid>
+            <Grid item>
+                <BaseDataGrid rows={rows} columns={columns}/>
+            </Grid>
+        </Grid>
     )
 }

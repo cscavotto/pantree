@@ -1,8 +1,16 @@
+"use client";
+
 import { GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import BaseDataGrid from "./base/baseDataGrid";
 import BaseAppBar from "./base/baseAppBar";
+import { Button, Grid, Modal } from "@mui/material";
+import { useState } from "react";
+import RecipeForm from "./recipeForm";
 
 export default function RecipeList() {
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     // this data should come from somewhere else
     // and ingredients should be calculated from pantry list
@@ -19,9 +27,28 @@ export default function RecipeList() {
       ];
 
     return (
-        <div>
-            <BaseAppBar title="Recipe List"/>
-            <BaseDataGrid rows={rows} columns={columns}/>
-        </div>
+        <Grid 
+            container 
+            spacing={3}
+            direction="column"
+            justifyContent="center">
+                <Grid item>
+                    <BaseAppBar title="Recipe List"/>
+                </Grid>
+                <Grid item>
+                    <Button variant="contained" onClick={handleOpen}>Add Recipe</Button>
+                    <Modal
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                    >
+                        <RecipeForm/>
+                    </Modal>
+                </Grid>
+                <Grid item>
+                    <BaseDataGrid rows={rows} columns={columns}/>
+                </Grid>
+        </Grid>
     )
 }
