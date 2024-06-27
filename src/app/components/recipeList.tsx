@@ -7,18 +7,14 @@ import { Button, Grid, Modal } from "@mui/material";
 import { useState } from "react";
 import RecipeForm from "./recipeForm";
 
-export default function RecipeList() {
+interface RecipeListProps {
+    rows: GridRowsProp
+}
+
+export default function RecipeList({rows}: RecipeListProps) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
-    // this data should come from somewhere else
-    // and ingredients should be calculated from pantry list
-    const rows: GridRowsProp = [
-        { id: 1, name: 'Pancakes', type: 'Breakfast', ingredients: 'Yes' },
-        { id: 2, name: 'Mojito', type: 'Drink', ingredients: 'No' },
-        { id: 3, name: 'Bruschetta', type: 'Appetizer', ingredients: 'Yes' },
-      ];
 
     const columns: GridColDef[] = [
         { field: 'name', headerName: 'Name', width: 150 },

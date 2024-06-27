@@ -3,16 +3,12 @@ import BaseDataGrid from "./base/baseDataGrid";
 import BaseAppBar from "./base/baseAppBar";
 import { Grid } from "@mui/material";
 
-export default function PantryList() {
+interface PantryListProps {
+    rows: GridRowsProp
+}
 
-    // this data should come from somewhere else
-    // and replace should be calculated from current amount
-    const rows: GridRowsProp = [
-        { id: 1, item: 'Milk', amount: '1 gallon', replace: 'No'},
-        { id: 2, item: 'Tomatoes', amount: '4', replace: 'No'},
-        { id: 3, item: 'Oregano', amount: '4 oz', replace: 'Yes'},
-      ];
-
+export default function PantryList({rows}: PantryListProps) {
+    
     const columns: GridColDef[] = [
         { field: 'item', headerName: 'Item', width: 150 },
         { field: 'amount', headerName: 'Amount', width: 150 },

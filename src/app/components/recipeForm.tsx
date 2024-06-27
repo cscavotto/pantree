@@ -7,7 +7,6 @@ export default function RecipeForm() {
     // if added from a url, should also add that recipe to the recipe list
     // need to rework how I'm storing the mock data to do this first
 
-
     return (
         <div> Hello world!</div>
     );
