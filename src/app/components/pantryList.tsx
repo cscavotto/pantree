@@ -10,9 +10,8 @@ interface PantryListProps {
 export default function PantryList({rows}: PantryListProps) {
     
     const columns: GridColDef[] = [
-        { field: 'item', headerName: 'Item', width: 150 },
-        { field: 'amount', headerName: 'Amount', width: 150 },
-        { field: 'replace', headerName: 'Replace', width: 150}
+        { field: 'name', headerName: 'Name', width: 150 },
+        { field: 'amount', headerName: 'Amount', width: 150 }
       ];
 
     return (

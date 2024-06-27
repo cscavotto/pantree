@@ -19,7 +19,7 @@ export default function RecipeList({rows}: RecipeListProps) {
     const columns: GridColDef[] = [
         { field: 'name', headerName: 'Name', width: 150 },
         { field: 'type', headerName: 'Type', width: 150 },
-        { field: 'ingredients', headerName: 'Ingredients', width: 150}
+        { field: 'description', headerName: 'Description', width: 300}
       ];
 
     return (
