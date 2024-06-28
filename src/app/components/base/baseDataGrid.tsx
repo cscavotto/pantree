@@ -125,7 +125,6 @@ export default function BaseDataGrid({initialRows, initialColumns, newRow, hasDe
   const handleDetailsClick = (id: GridRowId) => () => {
     const r = getRecipeDetails(id);
     setReceipe(r);
-    // now need to pop up a modal with the details
     handleOpen();
   }
 
