@@ -1,6 +1,7 @@
-import { GridRowsProp } from "@mui/x-data-grid";
+import { GridRowId, GridRowsProp } from "@mui/x-data-grid";
 import { recipeList } from "../mockData/recipeData";
 import { pantryList } from "../mockData/pantryData";
+import { Recipe } from "../interfaces/receipe";
 
 // this will handle the API call with a Promise. All logic in this function should be in the backend
 export function getRecipeData(): GridRowsProp {
@@ -13,6 +14,17 @@ export function getRecipeData(): GridRowsProp {
     })
 
     return recipeRows;
+}
+
+// this will use the data stored on the frontend if it exists; else it'll 
+// use a call to the backend
+export function getRecipeDetails(id: GridRowId): Recipe | null {
+    const recipe = recipeList.filter(r => r.id === id);
+    if (recipe.length > 0) {
+        return recipe[0]
+    }
+
+    return null;
 }
 
 // this will handle the API call with a Promise. All logic in this function should be in the backend

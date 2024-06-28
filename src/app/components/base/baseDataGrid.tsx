@@ -1,16 +1,20 @@
 "use client";
 
-import { Button } from "@mui/material";
+import { Button, Modal } from "@mui/material";
 import { DataGrid, GridRowsProp, GridColDef, GridRowModesModel, GridRowModes, GridToolbarContainer, GridRowId, GridSlots, GridEventListener, GridRowEditStopReasons, GridRowModel, GridActionsCellItem} from "@mui/x-data-grid";
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
+import MenuIcon from '@mui/icons-material/Menu';
 import {
   randomId
 } from '@mui/x-data-grid-generator';
 import { useState } from "react";
+import { getRecipeDetails } from "@/app/services/service";
+import RecipeDetails from "../recipeDetails";
+import { Recipe } from "@/app/interfaces/receipe";
 
 interface EditToolbarProps {
   setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
@@ -44,11 +48,13 @@ function EditToolbar(props: EditToolbarProps) {
 interface BaseDataGridProps {
     initialRows: GridRowsProp;
     initialColumns: GridColDef[],
-    newRow: any
+    newRow: any,
+    hasDetails?: boolean
 }
 
-export default function BaseDataGrid({initialRows, initialColumns, newRow}: BaseDataGridProps) {
+export default function BaseDataGrid({initialRows, initialColumns, newRow, hasDetails = false}: BaseDataGridProps) {
   const [rows, setRows] = useState(initialRows);
+  const [recipe, setReceipe] = useState<Recipe | null>(null);
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
   const columns: GridColDef[] = [...initialColumns, {
     field: 'actions',
@@ -79,7 +85,8 @@ export default function BaseDataGrid({initialRows, initialColumns, newRow}: Base
         ];
       }
 
-      return [
+      let actions: any[] =
+      [
         <GridActionsCellItem
           icon={<EditIcon />}
           label="Edit"
@@ -94,8 +101,33 @@ export default function BaseDataGrid({initialRows, initialColumns, newRow}: Base
           color="inherit"
         />,
       ];
+
+      if (hasDetails) {
+        actions.push(<GridActionsCellItem
+          icon={<MenuIcon />}
+          label="Details"
+          onClick={handleDetailsClick(id)}
+          color="inherit"
+      />)
+      }
+
+      return actions
     },
   },]
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  // this is specific to recipes for now. Need to research how to pass functions from 
+  // client component --> client component, or figure out a different structure so that
+  // this can be generalized
+  const handleDetailsClick = (id: GridRowId) => () => {
+    const r = getRecipeDetails(id);
+    setReceipe(r);
+    // now need to pop up a modal with the details
+    handleOpen();
+  }
 
   const handleRowEditStop: GridEventListener<'rowEditStop'> = (params, event) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
@@ -154,6 +186,14 @@ export default function BaseDataGrid({initialRows, initialColumns, newRow}: Base
             toolbar: { setRows, setRowModesModel, newRow },
           }}
         />
+        <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+        >
+            <RecipeDetails recipe={recipe}/>
+        </Modal>
       </div>
     );
   }

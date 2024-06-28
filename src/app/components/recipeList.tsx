@@ -3,9 +3,7 @@
 import { GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import BaseDataGrid from "./base/baseDataGrid";
 import BaseAppBar from "./base/baseAppBar";
-import { Button, Grid, Modal } from "@mui/material";
-import { useState } from "react";
-import RecipeForm from "./recipeForm";
+import { Grid } from "@mui/material";
 import { RecipeTypeEnum } from "../interfaces/receipe";
 
 interface RecipeListProps {
@@ -14,10 +12,6 @@ interface RecipeListProps {
 
 export default function RecipeList({rows}: RecipeListProps) {
     const newRow = {name: '', type: '', description: '', isNew: true}
-
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
 
     const columns: GridColDef[] = [
         { field: 'name', headerName: 'Name', width: 150, editable: true },
@@ -36,18 +30,7 @@ export default function RecipeList({rows}: RecipeListProps) {
                     <BaseAppBar title="Recipe List"/>
                 </Grid>
                 <Grid item>
-                    <Button variant="contained" onClick={handleOpen}>Parse Recipe</Button>
-                    <Modal
-                        open={open}
-                        onClose={handleClose}
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
-                    >
-                        <RecipeForm/>
-                    </Modal>
-                </Grid>
-                <Grid item>
-                    <BaseDataGrid initialRows={rows} initialColumns={columns} newRow={newRow}/>
+                    <BaseDataGrid initialRows={rows} initialColumns={columns} newRow={newRow} hasDetails={true}/>
                 </Grid>
         </Grid>
     )
