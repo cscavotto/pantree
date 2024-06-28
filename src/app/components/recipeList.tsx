@@ -6,20 +6,24 @@ import BaseAppBar from "./base/baseAppBar";
 import { Button, Grid, Modal } from "@mui/material";
 import { useState } from "react";
 import RecipeForm from "./recipeForm";
+import { RecipeTypeEnum } from "../interfaces/receipe";
 
 interface RecipeListProps {
     rows: GridRowsProp
 }
 
 export default function RecipeList({rows}: RecipeListProps) {
+    const newRow = {name: '', type: '', description: '', isNew: true}
+
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     const columns: GridColDef[] = [
-        { field: 'name', headerName: 'Name', width: 150 },
-        { field: 'type', headerName: 'Type', width: 150 },
-        { field: 'description', headerName: 'Description', width: 300}
+        { field: 'name', headerName: 'Name', width: 150, editable: true },
+        { field: 'type', headerName: 'Type', width: 150, editable: true, type: 'singleSelect',
+        valueOptions: [RecipeTypeEnum.DESSERT, RecipeTypeEnum.APPETIZER, RecipeTypeEnum.MAIN, RecipeTypeEnum.SIDE, RecipeTypeEnum.DRINK, RecipeTypeEnum.BREAKFAST], },
+        { field: 'description', headerName: 'Description', width: 300, editable: true}
       ];
 
     return (
@@ -32,7 +36,7 @@ export default function RecipeList({rows}: RecipeListProps) {
                     <BaseAppBar title="Recipe List"/>
                 </Grid>
                 <Grid item>
-                    <Button variant="contained" onClick={handleOpen}>Add Recipe</Button>
+                    <Button variant="contained" onClick={handleOpen}>Parse Recipe</Button>
                     <Modal
                         open={open}
                         onClose={handleClose}
@@ -43,7 +47,7 @@ export default function RecipeList({rows}: RecipeListProps) {
                     </Modal>
                 </Grid>
                 <Grid item>
-                    <BaseDataGrid rows={rows} columns={columns}/>
+                    <BaseDataGrid initialRows={rows} initialColumns={columns} newRow={newRow}/>
                 </Grid>
         </Grid>
     )

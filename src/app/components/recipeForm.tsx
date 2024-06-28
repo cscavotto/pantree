@@ -1,5 +1,3 @@
-
-
 export default function RecipeForm() {
 
     // need a way to manually enter a recipe

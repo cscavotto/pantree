@@ -21,7 +21,7 @@ export function getPantryData(): GridRowsProp {
    let pantryRows: any[] = []; // same problem with GridRowsProp here
 
     pantryList.forEach(p => {
-        pantryRows.push({id: p.id, name: p.name, amount: `${p.amount} ${p.measurementType}`})
+        pantryRows.push({id: p.id, name: p.name, amount: p.amount, measurement: p.measurementType})
     })    
 
    return pantryRows;
