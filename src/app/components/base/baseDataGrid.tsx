@@ -170,7 +170,7 @@ export default function BaseDataGrid({initialRows, initialColumns, newRow, hasDe
   };
 
     return (
-      <div style={{ height: 300, width: '100%' }}>
+      <div style={{ height: '100%', width: '100%' }}>
         <DataGrid 
           rows={rows}
           columns={columns}

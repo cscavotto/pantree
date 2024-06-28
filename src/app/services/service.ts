@@ -5,12 +5,16 @@ import { Recipe } from "../interfaces/receipe";
 
 // this will handle the API call with a Promise. All logic in this function should be in the backend
 export function getRecipeData(): GridRowsProp {
+    const pantryItemNames: string[] = getPantryItemNames();
+
     // this will call an API to get the data
     let recipeRows: any[] = []; // this is an any because GridRowsProp is readonly. Need to look into that
-    
+
     recipeList.forEach(r => {
-        // need to calculate if all the ingredients are present or not
-        recipeRows.push({id: r.id, name: r.name, type: r.type, description: r.description})
+        // TODO: need to calculate if enough of the ingredient is available for the recipe.
+        const allIngredients: boolean = r.ingredients.reduce((exists, i) => pantryItemNames.includes(i.name) ? exists && true : false, true)
+
+        recipeRows.push({id: r.id, name: r.name, type: r.type, description: r.description, allIngredients: allIngredients ? 'Yes' : 'No'})
     })
 
     return recipeRows;
@@ -37,4 +41,8 @@ export function getPantryData(): GridRowsProp {
     })    
 
    return pantryRows;
+}
+
+function getPantryItemNames(): string[] {
+    return pantryList.map(p => p.name);
 }

@@ -11,13 +11,14 @@ interface RecipeListProps {
 }
 
 export default function RecipeList({rows}: RecipeListProps) {
-    const newRow = {name: '', type: '', description: '', isNew: true}
+    const newRow = {name: '', type: '', description: '', allIngredients: 'No', isNew: true}
 
     const columns: GridColDef[] = [
         { field: 'name', headerName: 'Name', width: 150, editable: true },
         { field: 'type', headerName: 'Type', width: 150, editable: true, type: 'singleSelect',
         valueOptions: [RecipeTypeEnum.DESSERT, RecipeTypeEnum.APPETIZER, RecipeTypeEnum.MAIN, RecipeTypeEnum.SIDE, RecipeTypeEnum.DRINK, RecipeTypeEnum.BREAKFAST], },
-        { field: 'description', headerName: 'Description', width: 300, editable: true}
+        { field: 'description', headerName: 'Description', width: 300, editable: true},
+        { field: 'allIngredients', headerName: 'All Ingredients?', width: 150, editable: false}
       ];
 
     return (

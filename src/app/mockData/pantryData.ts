@@ -1,10 +1,6 @@
-
-
-// all of this data should come from the backend; mocking out in frontend for the sake of time
-
 import { Ingredient, MeasurementTypeEnum } from "../interfaces/ingredient"
 
-// for the sake of time
+// all of this data should come from the backend; mocking out in frontend for the sake of time
 export const milk: Ingredient = {id: 1, name: 'Milk', amount: 1, measurementType: MeasurementTypeEnum.GALLON}
 export const tomatoes: Ingredient = {id: 2, name: 'Tomatoes', amount: 4, measurementType: MeasurementTypeEnum.EACH}
 export const oregano: Ingredient = {id: 3, name: 'Oregano', amount: 4, measurementType: MeasurementTypeEnum.OZ}
