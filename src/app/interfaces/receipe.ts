@@ -12,10 +12,10 @@ export enum RecipeTypeEnum {
 export interface Recipe {
     id: number;
     name: string;
-    time: string;
-    servings: number;
     description: string;
     type: RecipeTypeEnum;
-    instructions: string;
-    ingredients: Ingredient[];
+    time?: string;
+    servings?: number;
+    instructions?: string;
+    ingredients?: Ingredient[];
 }

@@ -12,9 +12,10 @@ import {
   randomId
 } from '@mui/x-data-grid-generator';
 import { useState } from "react";
-import { getRecipeDetails } from "@/app/services/service";
+import { getRecipeDetails, updatePantryItem, updateRecipe } from "@/app/services/service";
 import RecipeDetails from "../recipeDetails";
 import { Recipe } from "@/app/interfaces/receipe";
+import { ListTypeEnum } from "@/app/enums/listType";
 
 interface EditToolbarProps {
   setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
@@ -49,10 +50,11 @@ interface BaseDataGridProps {
     initialRows: GridRowsProp;
     initialColumns: GridColDef[],
     newRow: any,
+    type: ListTypeEnum, // a bit of a hack that isn't extensible to more than 2 screens
     hasDetails?: boolean
 }
 
-export default function BaseDataGrid({initialRows, initialColumns, newRow, hasDetails = false}: BaseDataGridProps) {
+export default function BaseDataGrid({initialRows, initialColumns, newRow, hasDetails = false, type}: BaseDataGridProps) {
   const [rows, setRows] = useState(initialRows);
   const [recipe, setReceipe] = useState<Recipe | null>(null);
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
@@ -119,12 +121,12 @@ export default function BaseDataGrid({initialRows, initialColumns, newRow, hasDe
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  // this is specific to recipes for now. Need to research how to pass functions from 
-  // client component --> client component, or figure out a different structure so that
-  // this can be generalized
   const handleDetailsClick = (id: GridRowId) => () => {
-    const r = getRecipeDetails(id);
-    setReceipe(r);
+    if (type == ListTypeEnum.RECIPE){
+      const r = getRecipeDetails(id);
+      setReceipe(r);
+    }
+   
     handleOpen();
   }
 
@@ -161,6 +163,13 @@ export default function BaseDataGrid({initialRows, initialColumns, newRow, hasDe
   const processRowUpdate = (newRow: GridRowModel) => {
     const updatedRow = { ...newRow, isNew: false };
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+    // Don't love this here, but leaving for now so I can work on other things
+    if (type == ListTypeEnum.RECIPE) {
+      updateRecipe(updatedRow);
+    }
+    else if (type == ListTypeEnum.PANTRY) {
+      updatePantryItem(updatedRow);
+    }
     return updatedRow;
   };
 

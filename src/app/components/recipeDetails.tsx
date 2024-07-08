@@ -21,6 +21,8 @@ interface ReceipeProps {
 }
 
 export default function RecipeDetails({recipe}: ReceipeProps) {
+    // need to figure out how to style this like the rest of the system. Where is that coming from?
+    // also the console is mad about the List items, something about them not having the key? look into that
     return (
      <Box sx={{ ...style, width: 800 }}>
         <h2 id="parent-modal-title">{recipe?.name}</h2>
@@ -32,7 +34,7 @@ export default function RecipeDetails({recipe}: ReceipeProps) {
         </p>
         <h3 id="parent-modal-title">Ingredients</h3>
         <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-            {recipe?.ingredients.map(i => {
+            {recipe?.ingredients?.map(i => {
                 return (
                     <ListItem>
                         <ListItemText primary={`${i.amount} ${i.measurementType} ${i.name}`}  />

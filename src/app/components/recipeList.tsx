@@ -1,10 +1,9 @@
-"use client";
-
 import { GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import BaseDataGrid from "./base/baseDataGrid";
 import BaseAppBar from "./base/baseAppBar";
 import { Grid } from "@mui/material";
 import { RecipeTypeEnum } from "../interfaces/receipe";
+import { ListTypeEnum } from "../enums/listType";
 
 interface RecipeListProps {
     rows: GridRowsProp
@@ -20,6 +19,7 @@ export default function RecipeList({rows}: RecipeListProps) {
         { field: 'description', headerName: 'Description', width: 300, editable: true},
         { field: 'allIngredients', headerName: 'All Ingredients?', width: 150, editable: false}
       ];
+      
 
     return (
         <Grid 
@@ -31,7 +31,7 @@ export default function RecipeList({rows}: RecipeListProps) {
                     <BaseAppBar title="Recipe List"/>
                 </Grid>
                 <Grid item>
-                    <BaseDataGrid initialRows={rows} initialColumns={columns} newRow={newRow} hasDetails={true}/>
+                    <BaseDataGrid initialRows={rows} initialColumns={columns} newRow={newRow} hasDetails={true} type={ListTypeEnum.RECIPE}/>
                 </Grid>
         </Grid>
     )

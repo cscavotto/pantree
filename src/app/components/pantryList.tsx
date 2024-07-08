@@ -3,6 +3,7 @@ import BaseDataGrid from "./base/baseDataGrid";
 import BaseAppBar from "./base/baseAppBar";
 import { Grid } from "@mui/material";
 import { MeasurementTypeEnum } from "../interfaces/ingredient";
+import { ListTypeEnum } from "../enums/listType";
 
 interface PantryListProps {
     rows: GridRowsProp
@@ -29,7 +30,7 @@ export default function PantryList({rows}: PantryListProps) {
                 <BaseAppBar title="Pantry Items"/>
             </Grid>
             <Grid item>
-                <BaseDataGrid initialRows={rows} initialColumns={columns} newRow={newRow}/>
+                <BaseDataGrid initialRows={rows} initialColumns={columns} newRow={newRow} type={ListTypeEnum.PANTRY}/>
             </Grid>
         </Grid>
     )
