@@ -1,5 +1,6 @@
-import { Box, List, ListItem, ListItemText } from "@mui/material";
+import { Box, List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import { Recipe } from "../interfaces/receipe";
+import CircleIcon from '@mui/icons-material/Circle';
 
 // pull this out to a css file
 const style = {
@@ -20,32 +21,38 @@ interface ReceipeProps {
     recipe: Recipe | null
 }
 
+// getting an app-index.js:33 Warning: Function components cannot be given refs. Attempts to access this ref will fail. Did you mean to use React.forwardRef()?
+// error when opening this model. Need to look into that.
 export default function RecipeDetails({recipe}: ReceipeProps) {
-    // need to figure out how to style this like the rest of the system. Where is that coming from?
-    // also the console is mad about the List items, something about them not having the key? look into that
     return (
      <Box sx={{ ...style, width: 800 }}>
-        <h2 id="parent-modal-title">{recipe?.name}</h2>
-        <p id="parent-modal-description">
-        {recipe?.description}
-        </p>
-        <p id="parent-modal-description">
-        Cook Time: {recipe?.time} Servings: {recipe?.servings}
-        </p>
-        <h3 id="parent-modal-title">Ingredients</h3>
-        <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+        <Typography variant="h4" color="inherit">
+            <Box sx={{ fontWeight: 'bold', m: 1 }}>{recipe?.name}</Box>
+        </Typography>
+        <Typography variant="subtitle1" color="inherit">
+            <Box sx={{ fontStyle: 'italic', m: 1 }}>{recipe?.description}</Box>
+            <Box sx={{ fontStyle: 'italic', m: 1 }}>Cook Time: {recipe?.time}</Box>
+            <Box sx={{ fontStyle: 'italic', m: 1 }}>Servings: {recipe?.servings}</Box>
+        </Typography>
+        <Typography variant="h6" color="inherit">
+            <Box sx={{ fontWeight: 'bold', m: 1 }}>Ingredients</Box>
+        </Typography>
+        <List>
             {recipe?.ingredients?.map(i => {
                 return (
-                    <ListItem>
+                    <ListItem key={i.id}>
+                        <ListItemIcon> < CircleIcon fontSize="small"/> </ListItemIcon>
                         <ListItemText primary={`${i.amount} ${i.measurementType} ${i.name}`}  />
                     </ListItem>
                 )
             }) }
         </List>
-        <h3 id="parent-modal-title">Instructions</h3>
-        <p id="parent-modal-description">
-        {recipe?.instructions}
-        </p>
+        <Typography variant="h6" color="inherit">
+            <Box sx={{ fontWeight: 'bold', m: 1 }}>Instructions</Box>
+        </Typography>
+        <Typography variant="body1" color="inherit">
+            {recipe?.instructions}
+        </Typography>
     </Box>
     );
 }
