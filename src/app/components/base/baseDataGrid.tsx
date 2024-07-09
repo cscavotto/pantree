@@ -12,7 +12,7 @@ import {
   randomId
 } from '@mui/x-data-grid-generator';
 import { useState } from "react";
-import { getRecipeDetails, updatePantryItem, updateRecipe } from "@/app/services/service";
+import { getRecipeDetails, updatePantryItem, updateRecipeRow } from "@/app/services/service";
 import RecipeDetails from "../recipeDetails";
 import { Recipe } from "@/app/interfaces/receipe";
 import { ListTypeEnum } from "@/app/enums/listType";
@@ -165,7 +165,7 @@ export default function BaseDataGrid({initialRows, initialColumns, newRow, hasDe
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
     // Don't love this here, but leaving for now so I can work on other things
     if (type == ListTypeEnum.RECIPE) {
-      updateRecipe(updatedRow);
+      updateRecipeRow(updatedRow);
     }
     else if (type == ListTypeEnum.PANTRY) {
       updatePantryItem(updatedRow);

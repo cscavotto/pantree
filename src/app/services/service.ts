@@ -23,16 +23,13 @@ export function getRecipeData(): GridRowsProp {
 
 // this will use the data stored on the frontend if it exists; else it'll 
 // use a call to the backend
-export function getRecipeDetails(id: GridRowId): Recipe | null {
+export function getRecipeDetails(id: GridRowId): Recipe {
     const recipe = recipeList.filter(r => r.id === id);
-    if (recipe.length > 0) {
-        return recipe[0]
-    }
-
-    return null;
+    // there will always be a 1:1 match
+    return recipe[0];
 }
 
-export function updateRecipe(row: any) {
+export function updateRecipeRow(row: any) {
     const index = recipeList.findIndex(r => r.id === row.id);
 
     if (index != -1) {
@@ -60,6 +57,12 @@ export function updateRecipe(row: any) {
         recipeList.push(r);
     }
     // need to figure out how to run the All Ingredients check on this one recipe
+}
+
+export function updateRecipeDetails(recipe: Recipe) {
+    const index = recipeList.findIndex(r => r.id === recipe.id);
+    recipeList[index] = recipe;
+    // need to do a refresh on the table rows? how does that work? Does that go in Recipe Details?
 }
 
 // this will handle the API call with a Promise. All logic in this function should be in the backend
